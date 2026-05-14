@@ -9,37 +9,42 @@ import Layout from '../layouts/Layout.astro';
     <Timer hours1={0} minutes1={5} seconds1={9} hours2={5} minutes2={0} seconds2={5}/>
   </div>
 
-  <div class="points">
-    <span>Current Points: </span>
-    <span id="points-value">0</span>
-  </div>
-
-  <div class="problems">
-    <div class="pb-header">
-      <span>Problem</span>
-      <span>Subtasks</span>
-      <span>Update</span>
-      <span>Total</span>
+  <div class="outside">
+    <div class="container">
+      <span>Current Points: </span>
+      <span id="points-value">0</span>
     </div>
 
-    <Problem 
-        name={"Elevator Tamem"}
-        link="https://tlx.toki.id/problems/compfest-15-jcpc-penyisihan/E"
-        count={8}
-        subtasks={[5,5,6,12,23,13,14,22]}
-    />
-    <Problem 
-        name={"Maraton Anime"}
-        link="https://tlx.toki.id/problems/compfest-12-jcpc-final/A"
-        count={4}
-        subtasks={[18,27,24,31]}
-    />
-    <Problem 
-        name={"September"}
-        link="https://tlx.toki.id/problems/apio-2024/A"
-        count={10}
-        subtasks={[11,14,5,9,5,11,9,11,9,16]}
-    />
+    <div class="problems">
+      <div class="pb-header">
+        <span>Problem</span>
+        <span>Subtasks</span>
+        <span>Update</span>
+        <span>Total</span>
+      </div>
+
+      <Problem 
+          name={"Elevator Tamem"}
+          link="https://tlx.toki.id/problems/compfest-15-jcpc-penyisihan/E"
+          count={8}
+          subtasks={[5,5,6,12,23,13,14,22]}
+      />
+      <Problem 
+          name={"Maraton Anime"}
+          link="https://tlx.toki.id/problems/compfest-12-jcpc-final/A"
+          count={4}
+          subtasks={[18,27,24,31]}
+      />
+      <Problem 
+          name={"September"}
+          link="https://tlx.toki.id/problems/apio-2024/A"
+          count={10}
+          subtasks={[11,14,5,9,5,11,9,11,9,16]}
+      />
+  </div>
+  </div>
+  <div class="container">
+    <span>by yours truly.</span>
   </div>
 </Layout>
 
@@ -50,7 +55,7 @@ import Layout from '../layouts/Layout.astro';
     font-size: 13px;
   }
 
-  .points {
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,6 +64,13 @@ import Layout from '../layouts/Layout.astro';
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 13px;
     font-weight: 500;
+  }
+
+  .outside {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
   }
 
   #points-value {
@@ -70,6 +82,7 @@ import Layout from '../layouts/Layout.astro';
     border: 1px solid #e5e5e5;
     border-radius: 6px;
     width: 1200px;
+    /* height: 600px; */
     margin: 0 auto;
     overflow: hidden;
   }
