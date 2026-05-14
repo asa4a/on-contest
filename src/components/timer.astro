@@ -1,0 +1,152 @@
+---
+const {
+    hours1 = 0,
+    minutes1 = 0,
+    seconds1 = 0,
+    hours2 = 0,
+    minutes2 = 0,
+    seconds2 = 0
+} = Astro.props;
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<div class="cd-wrapper">
+    <div class="timers">
+        <div class="countdown">
+            <span class="h">{String(hours1).padStart(2, "0")}</span>
+            <span class="sep">:</span>
+            <span class="m">{String(minutes1).padStart(2, "0")}</span>
+            <span class="sep">:</span>
+            <span class="s">{String(seconds1).padStart(2, "0")}</span>
+        </div>
+        <div class="countdown">
+            <span class="h">{String(hours2).padStart(2, "0")}</span>
+            <span class="sep">:</span>
+            <span class="m">{String(minutes2).padStart(2, "0")}</span>
+            <span class="sep">:</span>
+            <span class="s">{String(seconds2).padStart(2, "0")}</span>
+        </div>
+    </div>
+    <div class="controls">
+        <button class="start">Start</button>
+        <button class="pause">Pause</button>
+        <button class="reset">Reset</button>
+    </div>
+</div>
+
+<script define:vars={{ hours1, minutes1, seconds1, hours2, minutes2, seconds2 }}>
+    const wrapper = document.currentScript.previousElementSibling;
+    const blocks = wrapper.querySelectorAll(".countdown");
+    const startBtn = wrapper.querySelector(".start");
+    const pauseBtn = wrapper.querySelector(".pause");
+    const resetBtn = wrapper.querySelector(".reset");
+
+    const inits = [
+        hours1 * 3600 + minutes1 * 60 + seconds1,
+        hours2 * 3600 + minutes2 * 60 + seconds2
+    ];
+    const timers = Array.from(blocks).map((el, i) => ({ el, time: inits[i] }));
+
+    let idx = 0;
+    let interval = null;
+
+    function format(t) {
+        t = Math.max(0, t);
+        return {
+            h: String(Math.floor(t / 3600)).padStart(2, "0"),
+            m: String(Math.floor((t % 3600) / 60)).padStart(2, "0"),
+            s: String(t % 60).padStart(2, "0")
+        };
+    }
+
+    function renderTimer(t) {
+        const f = format(t.time);
+        t.el.querySelector(".h").textContent = f.h;
+        t.el.querySelector(".m").textContent = f.m;
+        t.el.querySelector(".s").textContent = f.s;
+    }
+
+    function tick() {
+        const t = timers[idx];
+        if (!t) return;
+        t.time = Math.max(0, t.time - 1);
+        renderTimer(t);
+        if (t.time === 0) {
+            clearInterval(interval);
+            interval = null;
+            idx++;
+            if (idx < timers.length) start();
+        }
+    }
+
+    function start() {
+        if (interval) return;
+        interval = setInterval(tick, 1000);
+    }
+
+    function pause() {
+        clearInterval(interval);
+        interval = null;
+    }
+
+    function reset() {
+        pause();
+        idx = 0;
+        for (const [i, t] of timers.entries()) {
+            t.time = inits[i];
+            renderTimer(t);
+        }
+    }
+
+    startBtn.addEventListener("click", start);
+    pauseBtn.addEventListener("click", pause);
+    resetBtn.addEventListener("click", reset);
+</script>
+
+<style>
+    .cd-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 32px 0;
+        font-family: 'Inter', system-ui, sans-serif;
+    }
+    .timers {
+        display: flex;
+        flex-direction: row;
+        gap: 48px;
+    }
+    .countdown {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        font-size: 40px;
+        font-weight: 400;
+        font-variant-numeric: tabular-nums;
+        font-family: 'Inter', system-ui, sans-serif;
+        white-space: nowrap;
+    }
+    .countdown .sep {
+        color: #999;
+    }
+    .controls {
+        display: flex;
+        gap: 8px;
+    }
+    button {
+        font-family: 'Inter', system-ui, sans-serif;
+        font-size: 13px;
+        padding: 6px 16px;
+        border-radius: 4px;
+        border: 1px solid #d4d4d4;
+        background: transparent;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #f5f5f5;
+    }
+</style>

@@ -1,0 +1,89 @@
+---
+import Timer from '../components/timer.astro';
+import Problem from '../components/problem.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div style="justify-content: center; margin: 2rem;">
+    <Timer hours1={0} minutes1={5} seconds1={9} hours2={5} minutes2={0} seconds2={5}/>
+  </div>
+
+  <div class="points">
+    <span>Current Points: </span>
+    <span id="points-value">0</span>
+  </div>
+
+  <div class="problems">
+    <div class="pb-header">
+      <span>Problem</span>
+      <span>Subtasks</span>
+      <span>Update</span>
+      <span>Total</span>
+    </div>
+
+    <Problem 
+        name={"Elevator Tamem"}
+        link="https://tlx.toki.id/problems/compfest-15-jcpc-penyisihan/E"
+        count={8}
+        subtasks={[5,5,6,12,23,13,14,22]}
+    />
+    <Problem 
+        name={"Maraton Anime"}
+        link="https://tlx.toki.id/problems/compfest-12-jcpc-final/A"
+        count={4}
+        subtasks={[18,27,24,31]}
+    />
+    <Problem 
+        name={"September"}
+        link="https://tlx.toki.id/problems/apio-2024/A"
+        count={10}
+        subtasks={[11,14,5,9,5,11,9,11,9,16]}
+    />
+  </div>
+</Layout>
+
+<style>
+  span {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+  }
+
+  .points {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin: 1.5rem 0;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  #points-value {
+    font-weight: 600;
+  }
+
+  .problems {
+    font-family: 'Inter', system-ui, sans-serif;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .pb-header {
+    display: grid;
+    grid-template-columns: 150px 800px 100px auto;
+    gap: 14px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #999;
+    border-bottom: 1px solid #e5e5e5;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
